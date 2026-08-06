@@ -22,3 +22,12 @@ For every feature branch that completes a task, create branch-dependent document
 **Purpose:** These documents serve as learning references and decision records for why certain steps were performed and how. If the branch changes, create a new documentation file rather than modifying existing ones.
 
 **When to Create:** Upon task completion, before or after committing changes.
+
+# Database types
+
+Derive database types from the Drizzle schema — never hand-write custom or partial
+shapes for table rows. Export `typeof table.$inferSelect` (and `$inferInsert` when
+needed) from `lib/schema.ts` and import it. When a consumer needs only some
+columns, narrow with `Pick<Row, ...>` / `Omit<Row, ...>` rather than redeclaring a
+literal type. Don't add an insert type where `db.insert(...).values()` already
+enforces the shape.
